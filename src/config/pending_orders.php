@@ -10,7 +10,7 @@
 				'single_item_name'		=> 'Pending Order',
 				'has_timestamps'		=> TRUE,
 				'default_order_by'		=> 'id DESC',
-				'where' 				=> 'paypal_status = "COMPLETED" AND shipping_date="0000-00-00"',
+				'where' 				=> '(paypal_status = "COMPLETED" OR stripe_status = "COMPLETED") AND (shipping_date="0000-00-00" OR shipping_date IS NULL)',
 				//'override'			 	=> ['L'=>'CustomController@adminPendingList','U'=>'CustomController@adminPendingUpdate'],
 				'trigger'				=> ['pre'=>['U'=>'WorkController@emailShippingConf']],
 				//'append'				=> ['U']
@@ -267,6 +267,22 @@
 				],
 				'paypal_transactionid'	=> [
 					'label'			=> 'PayPal transactionId',
+					'type'			=> 'text',
+					'length'		=> 199,
+					'attributes'	=> '',
+					'rules'			=>	'',
+					'display'		=>	'CRUD'
+				],
+				'stripe_status'	=> [
+					'label'			=> 'Stripe Status',
+					'type'			=> 'text',
+					'length'		=> 199,
+					'attributes'	=> '',
+					'rules'			=>	'',
+					'display'		=>	'CRUD'
+				],
+				'stripe_charge_id'	=> [
+					'label'			=> 'Stripe Charge ID',
 					'type'			=> 'text',
 					'length'		=> 199,
 					'attributes'	=> '',

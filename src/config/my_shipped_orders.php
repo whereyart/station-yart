@@ -10,7 +10,7 @@
 				'single_item_name'		=> 'Shipped Order',
 				'has_timestamps'		=> TRUE,
 				'default_order_by'		=> 'name',
-				'where' 				=> 'artist_id = "%user_id%" AND shipping_date != "0000-00-00"',
+				'where' 				=> 'artist_id = "%user_id%" AND shipping_date != "0000-00-00" AND shipping_date IS NOT NULL',
 				'no_data_alert' 		=> [
 
 					'header' 	=> 'No Shipped Orders Yet',
@@ -265,6 +265,22 @@
 				],
 				'paypal_transactionid'	=> [
 					'label'			=> 'PayPal transactionId',
+					'type'			=> 'text',
+					'length'		=> 199,
+					'attributes'	=> '',
+					'rules'			=>	'',
+					'display'		=>	'CR'
+				],
+				'stripe_status'	=> [
+					'label'			=> 'Stripe Status',
+					'type'			=> 'text',
+					'length'		=> 199,
+					'attributes'	=> '',
+					'rules'			=>	'',
+					'display'		=>	'CR'
+				],
+				'stripe_charge_id'	=> [
+					'label'			=> 'Stripe Charge ID',
 					'type'			=> 'text',
 					'length'		=> 199,
 					'attributes'	=> '',

@@ -1,7 +1,7 @@
 {
     "name": "whereyart/station-yart",
     "description": "Easy CRUD and User Auth Mix For Laravel 4",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "license": "MIT",
     "authors": [
         {

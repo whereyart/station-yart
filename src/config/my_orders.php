@@ -223,6 +223,22 @@
 					'attributes'	=> '',
 					'rules'			=>	'',
 					'display'		=>	'CRUD'
+				],
+				'stripe_status'	=> [
+					'label'			=> 'Stripe Status',
+					'type'			=> 'text',
+					'length'		=> 199,
+					'attributes'	=> '',
+					'rules'			=>	'',
+					'display'		=>	'CRUD'
+				],
+				'stripe_charge_id'	=> [
+					'label'			=> 'Stripe Charge ID',
+					'type'			=> 'text',
+					'length'		=> 199,
+					'attributes'	=> '',
+					'rules'			=>	'',
+					'display'		=>	'CRUD'
 				]
 			]
 	];
