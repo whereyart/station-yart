@@ -10,7 +10,7 @@
 				'single_item_name'		=> 'Pending Order',
 				'has_timestamps'		=> TRUE,
 				'default_order_by'		=> 'name',
-				'where' 				=> 'artist_id = "%user_id%" AND paypal_status = "COMPLETED" AND shipping_date="0000-00-00"',
+				'where' 				=> 'artist_id = "%user_id%" AND (paypal_status = "COMPLETED" OR stripe_status = "COMPLETED") AND (shipping_date="0000-00-00" OR shipping_date IS NULL)',
 				'trigger'				=> ['pre'=>['U'=>'WorkController@emailShippingConf']],
 				'no_data_alert' 		=> [
 
@@ -48,7 +48,8 @@
 					'label'			=> 'Shipping Data',
 					'type'			=> 'virtual',
 					'concat' 		=> 'shipping_one, "<br />", shipping_two, " ", '
-									.  'shipping_three, "<br />", shipping_city, ", ", shipping_state, " ", shipping_zip',
+										. 'shipping_three, "<br />", shipping_city, ", ", shipping_state, " ", shipping_zip, "<br />",'
+										. 'shipping_name, "<br />", shipping_phone',
 					'display'		=>	'L'
 				],
 				'work_quantity'	=> [
@@ -184,12 +185,21 @@
 				],
 
 				'shipping_email'	=> [
-					'label'			=> 'email',
+					'label'			=> 'Contact Email',
 					'type'			=> 'email',
 					'length'		=> 90,
 					'attributes'	=> '',
 					'rules'			=>	'required|email|max:90',
 					'display'		=>	'CRUD'
+				],
+
+				'shipping_phone'	=> [
+					'label'			=> 'Contact Phone',
+					'type'			=> 'text',
+					'length'		=> 90,
+					'attributes'	=> '',
+					'rules'			=> '',
+					'display'		=> 'CRUD'
 				],
 				
 				'shipping_one'	=> [
