@@ -403,8 +403,11 @@ class StationPanelController extends \BaseController {
 	}
 
 	public function index($panel_name){
-
 		$panel			= new Panel;
+
+        $is_panel_overridden = $panel->is_panel_overridden($panel_name);
+        if ($is_panel_overridden){return Redirect::action($panel->get_override_url($panel_name));}
+
 		$panel_data		= $panel->get_data_for($panel_name);
 
 		if (!$panel_data) return Redirect::back()->with('error', 'You do not have access to that area.');
