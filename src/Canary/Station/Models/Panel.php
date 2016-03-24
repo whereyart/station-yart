@@ -238,50 +238,6 @@ class Panel {
     }
 
     /**
-     * get only the config information given a specific panel name
-     *
-     * @param  string  $panel_name
-     * @return array $config or False if there is no panel
-     */
-    private function get_config_for($panel_name, $subpanel_parent = FALSE){
-        $panel = $this->user_scope($panel_name, 'L', $subpanel_parent);
-        if (!$panel) return FALSE;
-        $config = $panel['config'];
-        return $config;
-    }
-
-    /**
-     * return if the panel is overriddem or not
-     *
-     * @param  string  $panel_name
-     * @return bool
-     */
-    public function is_panel_overridden($panel_name){
-        $config = $this->get_config_for($panel_name);
-        if ($config['panel_options']['table'] == False){
-            return True;
-        }
-        else {
-            return False;
-        }
-    }
-
-    /**
-     * return override url
-     *
-     * @param  string  $panel_name
-     * @return string $override_path
-     */
-
-    public function get_override_url($panel_name){
-        $config = $this->get_config_for($panel_name);
-        $override_path = $config['panel_options']['override']['L'];
-        return $override_path;
-    }
-
-
-
-    /**
      * return everything we can about this panel 
      * config, data, joins, etc.
      *
@@ -331,8 +287,6 @@ class Panel {
 
         return $panel;
     }
-
-
 
     /**
      * return everything we can about this panel but only the data for a 
