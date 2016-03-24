@@ -250,26 +250,30 @@ class Panel {
 
         if (!$panel) return FALSE;
 
-        $model_name                = $this->model_name_for($panel_name);
-        $table_name                = $panel['config']['panel_options']['table'];
-        $model                     = new $model_name;
-        $is_filtered               = !$count_only && !$keyword;
-        $primary_element           = $table_name.'.'.$this->primary_element_for($panel);
-        $fields_for_select         = $ids_only ? [$table_name.'.id'] : $this->fields_for_select($panel);
-        $fields_for_select         = $keyword ? [$table_name.'.id', DB::raw($primary_element.' AS name')] : $fields_for_select;
-        $where_clause              = $this->where_clause_for($panel); 
-        $order_by                  = $this->order_by_clause_for($panel); 
-        $joins                     = $this->joins_for($panel); 
-        $user_filters              = $is_filtered ? $this->user_filters_for($panel_name) : array();
+        if(!isset($panel['config']['panel_options']['table']) || is_string($panel['config']['panel_options']['table'])) {
 
-        $query                     = $model::select($fields_for_select); 
-        $query                     = $where_clause ? $query->whereRaw($where_clause) : $query;
-        $query                     = $keyword ? $query->whereRaw($primary_element." LIKE '%".addslashes($keyword)."%'") : $query;
-        $query                     = $is_filtered ? $this->apply_joins_with_filters($joins, $user_filters, $query, $panel) : $query;
-        $query                     = $order_by ? $query->orderByRaw($order_by) : $query;
 
-        $panel['user_filters']     = $user_filters;
-        $panel['has_user_filters'] = count($user_filters) > 0;
+            $model_name = $this->model_name_for($panel_name);
+            $table_name = $panel['config']['panel_options']['table'];
+            $model = new $model_name;
+            $is_filtered = !$count_only && !$keyword;
+            $primary_element = $table_name . '.' . $this->primary_element_for($panel);
+            $fields_for_select = $ids_only ? [$table_name . '.id'] : $this->fields_for_select($panel);
+            $fields_for_select = $keyword ? [$table_name . '.id', DB::raw($primary_element . ' AS name')] : $fields_for_select;
+            $where_clause = $this->where_clause_for($panel);
+            $order_by = $this->order_by_clause_for($panel);
+            $joins = $this->joins_for($panel);
+            $user_filters = $is_filtered ? $this->user_filters_for($panel_name) : array();
+
+            $query = $model::select($fields_for_select);
+            $query = $where_clause ? $query->whereRaw($where_clause) : $query;
+            $query = $keyword ? $query->whereRaw($primary_element . " LIKE '%" . addslashes($keyword) . "%'") : $query;
+            $query = $is_filtered ? $this->apply_joins_with_filters($joins, $user_filters, $query, $panel) : $query;
+            $query = $order_by ? $query->orderByRaw($order_by) : $query;
+
+            $panel['user_filters'] = $user_filters;
+            $panel['has_user_filters'] = count($user_filters) > 0;
+
 
         if ($count_only){
 
@@ -284,6 +288,14 @@ class Panel {
         }
 
         if ($is_filtered) $panel['data'] = $this->run_pivot_filters($panel, $user_filters);
+        }
+
+        else {
+            $panel['data'] = [];
+            $panel['user_filters'] = [];
+            $panel['has_user_filters'] = false;
+        }
+
 
         return $panel;
     }
