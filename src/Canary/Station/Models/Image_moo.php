@@ -392,13 +392,13 @@ class Image_moo
 			switch ($image_info["mime"])
 			{
 				case "image/gif"  :
-					return @imagecreatefromgif($filename);
+					return @\imagecreatefromgif($filename);
 					break;
 				case "image/jpeg" :
-	    			return @imagecreatefromjpeg($filename);
+	    			return @\imagecreatefromjpeg($filename);
 					break;
 				case "image/png" :
-	 		        return @imagecreatefrompng($filename);
+	 		        return @\imagecreatefrompng($filename);
 					break;
 			}
 		}
