@@ -727,7 +727,7 @@ class StationPanelController extends \BaseController {
 				$override['method'] = substr($override['method'],0,strpos($override['method'], '('));
 			}
 			else $vars = '';
-			return App::make($override['controller'])->$override['method']($vars);
+			return App::make($override['controller'])->{$override['method']}($vars);
 
 		}
 
